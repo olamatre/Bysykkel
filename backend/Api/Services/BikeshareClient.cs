@@ -44,6 +44,7 @@ public sealed class BikeshareClient(HttpClient httpClient) : IBikeshareClient
 }
 public sealed record StationInformationResponse(
     [property: JsonPropertyName("last_updated")] long LastUpdated,
+    [property: JsonPropertyName("ttl")] int Ttl,
     [property: JsonPropertyName("data")] StationInformationData Data);
 
 public sealed record StationInformationData(
@@ -59,6 +60,7 @@ public sealed record StationInformationStation(
 
 public sealed record StationStatusResponse(
     [property: JsonPropertyName("last_updated")] long LastUpdated,
+    [property: JsonPropertyName("ttl")] int Ttl,
     [property: JsonPropertyName("data")] StationStatusData Data);
 
 public sealed record StationStatusData(

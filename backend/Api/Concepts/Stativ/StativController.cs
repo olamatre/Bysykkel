@@ -8,6 +8,7 @@ namespace Api.Concepts.Stativ;
 [Route("stativ")]
 public sealed class StativController(IQueryDispatcher queryDispatcher) : ControllerBase
 {
+    // TODO: Bruk kartkoordinater for å begrense antall stativer som returneres, basert på en radius fra et punkt
     [HttpGet]
     public Task<IReadOnlyList<StativViewModel>> HentAlleStativer(CancellationToken cancellationToken) =>
         queryDispatcher.Dispatch<GetStativQuery, IReadOnlyList<StativViewModel>>(new GetStativQuery(), cancellationToken);

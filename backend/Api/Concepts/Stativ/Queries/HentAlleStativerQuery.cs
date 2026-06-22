@@ -28,6 +28,8 @@ public class HentAlleStativerQueryHandler(IBikeshareClient bikeshareClient)
 {
     public async Task<IReadOnlyList<StativViewModel>> Handle(GetStativQuery query, CancellationToken cancellationToken = default)
     {
+        // TODO: Cache data basert på TTL fra API
+        // TODO: Kjør gjennom domenelaget
         var stationInformation = await bikeshareClient.GetStationInformationAsync(cancellationToken);
         var stationStatusInformation = await bikeshareClient.GetStationStatusAsync(cancellationToken);
         return stationInformation.Data.Stations
