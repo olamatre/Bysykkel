@@ -65,10 +65,10 @@ public sealed record StationStatusData(
     [property: JsonPropertyName("stations")] IReadOnlyList<StationStatusStation> Stations);
 
 public sealed record StationStatusStation(
-    [property: JsonPropertyName("is_installed")] int IsInstalled,
-    [property: JsonPropertyName("is_renting")] int IsRenting,
+    [property: JsonPropertyName("is_installed")] bool IsInstalled,
+    [property: JsonPropertyName("is_renting")] bool IsRenting,
     [property: JsonPropertyName("num_bikes_available")] int NumBikesAvailable,
     [property: JsonPropertyName("num_docks_available")] int NumDocksAvailable,
     [property: JsonPropertyName("last_reported")] long LastReported,
-    [property: JsonPropertyName("is_returning")] int IsReturning,
+    [property: JsonPropertyName("is_returning")] bool IsReturning,
     [property: JsonPropertyName("station_id")] string StationId);
