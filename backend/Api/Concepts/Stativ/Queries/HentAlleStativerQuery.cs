@@ -1,8 +1,9 @@
 using Api.Services;
+using CQRS;
 
 namespace Api.Concepts.Stativ.Queries;
 
-public record GetStativQuery;
+public record GetStativQuery : IQuery<IReadOnlyList<StativViewModel>>;
 
 public record StativViewModel(
     string StativId,
@@ -13,14 +14,11 @@ public record StativViewModel(
     int Kapasitet
 );
 
-public interface IHentAlleStativerQueryHandler
+public sealed class HentAlleStativerQueryHandler(IBikeshareClient bikeshareClient)
+    : IQueryHandler<GetStativQuery, IReadOnlyList<StativViewModel>>
 {
-    Task<IReadOnlyList<StativViewModel>> HandleAsync(GetStativQuery query, CancellationToken cancellationToken = default);
-}
 
-public sealed class HentAlleStativerQueryHandler(IBikeshareClient bikeshareClient) : IHentAlleStativerQueryHandler
-{
-    public async Task<IReadOnlyList<StativViewModel>> HandleAsync(GetStativQuery query, CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<StativViewModel>> Handle(GetStativQuery query, CancellationToken cancellationToken = default)
     {
         var stationInformation = await bikeshareClient.GetStationInformationAsync(cancellationToken);
         return stationInformation.Data.Stations

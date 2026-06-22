@@ -11,4 +11,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CQRS\CQRS.csproj" />
+  </ItemGroup>
+
 </Project>

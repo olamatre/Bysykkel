@@ -1,5 +1,6 @@
-using Api.Concepts.Stativ.Queries;
 using Api.Services;
+using Api.Concepts.Stativ.Queries;
+using CQRS;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +18,8 @@ builder.Services.AddHttpClient<IBikeshareClient, BikeshareClient>((serviceProvid
     httpClient.BaseAddress = new Uri(options.BaseUrl);
     httpClient.DefaultRequestHeaders.Add("Client-Identifier", options.ClientIdentifier);
 });
-builder.Services.AddScoped<IHentAlleStativerQueryHandler, HentAlleStativerQueryHandler>();
+builder.Services.AddScoped<IQueryDispatcher, QueryDispatcher>();
+builder.Services.AddScoped<IQueryHandler<GetStativQuery, IReadOnlyList<StativViewModel>>, HentAlleStativerQueryHandler>();
 
 var app = builder.Build();
 
@@ -33,11 +35,5 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.MapControllers();
-
-var bikeshare = app.MapGroup("/bikeshare");
-bikeshare.MapGet("/stasjoner", (IBikeshareClient client, CancellationToken cancellationToken) =>
-    client.GetStationInformationAsync(cancellationToken));
-bikeshare.MapGet("/stasjon-status", (IBikeshareClient client, CancellationToken cancellationToken) =>
-    client.GetStationStatusAsync(cancellationToken));
 
 app.Run();
