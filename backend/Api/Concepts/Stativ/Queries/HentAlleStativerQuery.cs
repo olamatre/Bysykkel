@@ -23,10 +23,9 @@ public record StativStatusViewModel(
     DateTimeOffset SistOppdatert
 );
 
-public sealed class HentAlleStativerQueryHandler(IBikeshareClient bikeshareClient)
+public class HentAlleStativerQueryHandler(IBikeshareClient bikeshareClient)
     : IQueryHandler<GetStativQuery, IReadOnlyList<StativViewModel>>
 {
-
     public async Task<IReadOnlyList<StativViewModel>> Handle(GetStativQuery query, CancellationToken cancellationToken = default)
     {
         var stationInformation = await bikeshareClient.GetStationInformationAsync(cancellationToken);
